@@ -45,9 +45,9 @@ if is_torch_available():
 logger = logging.get_logger(__name__)
 
 
-class SegformerImageProcessor(BaseImageProcessor):
+class SwinImageProcessor(BaseImageProcessor):
     r"""
-    Constructs a Segformer image processor.
+    Constructs a Swin image processor.
 
     Args:
         do_resize (`bool`, *optional*, defaults to `True`):
@@ -175,8 +175,9 @@ class SegformerImageProcessor(BaseImageProcessor):
             order = resample,
 
         )
+        data_format = input_data_format if data_format is None else data_format
         resized_image = to_channel_dimension_format(
-            resized_image, data_format, input_channel_dim=ChannelDimension.LAST
+            resized_image, data_format, input_channel_dim=input_data_format
         )
         return resized_image
     # Copied from transformers.models.beit.image_processing_beit.BeitImageProcessor.reduce_label

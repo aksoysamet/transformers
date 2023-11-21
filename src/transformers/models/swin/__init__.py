@@ -18,6 +18,13 @@ from ...utils import OptionalDependencyNotAvailable, _LazyModule, is_tf_availabl
 
 _import_structure = {"configuration_swin": ["SWIN_PRETRAINED_CONFIG_ARCHIVE_MAP", "SwinConfig", "SwinOnnxConfig"]}
 
+try:
+    if not is_vision_available():
+        raise OptionalDependencyNotAvailable()
+except OptionalDependencyNotAvailable:
+    pass
+else:
+    _import_structure["image_processing_swin"] = ["SwinImageProcessor"]
 
 try:
     if not is_torch_available():
@@ -50,6 +57,14 @@ else:
 
 if TYPE_CHECKING:
     from .configuration_swin import SWIN_PRETRAINED_CONFIG_ARCHIVE_MAP, SwinConfig, SwinOnnxConfig
+
+    try:
+        if not is_vision_available():
+            raise OptionalDependencyNotAvailable()
+    except OptionalDependencyNotAvailable:
+        pass
+    else:
+        from .image_processing_swin import SwinImageProcessor
 
     try:
         if not is_torch_available():
